@@ -1,0 +1,29 @@
+from django.http import FileResponse
+from rest_framework import decorators, response, viewsets
+from rest_framework.filters import OrderingFilter, SearchFilter
+
+from apps.materials.models import Lecture, Practical
+from apps.materials.serializers import LectureSerializer, PracticalSerializer
+from utils.permissions import IsTeacherOrAdminOrReadOnly
+
+
+class BaseMaterialViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsTeacherOrAdminOrReadOnly]
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ["title"]
+    ordering_fields = ["title", "uploaded_at"]
+
+    @decorators.action(detail=True, methods=["get"])
+    def download(self, request, pk=None):
+        instance = self.get_object()
+        return FileResponse(instance.file.open("rb"), as_attachment=True, filename=instance.file.name.split("/")[-1])
+
+
+class LectureViewSet(BaseMaterialViewSet):
+    queryset = Lecture.objects.all()
+    serializer_class = LectureSerializer
+
+
+class PracticalViewSet(BaseMaterialViewSet):
+    queryset = Practical.objects.all()
+    serializer_class = PracticalSerializer

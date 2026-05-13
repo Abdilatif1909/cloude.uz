@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/custom-admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div class="brand-shell">
+  <h1 id="site-name"><a href="{% url 'admin:index' %}">WebDasturlashEdu Admin</a></h1>
+  <p class="brand-subtitle">Educational platform management center</p>
+</div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

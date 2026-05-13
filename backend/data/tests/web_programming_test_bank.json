@@ -1,0 +1,272 @@
+[
+  {
+    "title": "WEB dasturlashga kirish. Asosiy tushunchalar. WWW rivojlanish bosqichlari",
+    "description": "Web dasturlashning asoslari, WWW tarixi va client-server modeli bo'yicha boshlang'ich test.",
+    "difficulty": "beginner",
+    "estimated_time": 12,
+    "questions": [
+      {"question": "Web dasturlashning asosiy maqsadi nima?", "option_a": "Faqat rasm chizish", "option_b": "Internet orqali ishlovchi veb-ilovalarni yaratish", "option_c": "Faqat lokal fayl ochish", "option_d": "Kompyuterni formatlash", "correct_answer": "B"},
+      {"question": "WWW qisqartmasi nimani anglatadi?", "option_a": "World Wide Web", "option_b": "Web World Width", "option_c": "Wide Web World", "option_d": "World Web Window", "correct_answer": "A"},
+      {"question": "Veb-sahifalar odatda qaysi protokol orqali uzatiladi?", "option_a": "FTP", "option_b": "SMTP", "option_c": "HTTP", "option_d": "POP3", "correct_answer": "C"},
+      {"question": "Client-server modelida brauzer qaysi rolni bajaradi?", "option_a": "Server", "option_b": "Client", "option_c": "Router", "option_d": "Database", "correct_answer": "B"},
+      {"question": "Dastlabki statik web sahifalar asosan nimadan tashkil topgan edi?", "option_a": "HTML fayllardan", "option_b": "Mobil ilovalardan", "option_c": "Ma'lumotlar bazasidan", "option_d": "Operatsion tizimdan", "correct_answer": "A"},
+      {"question": "Dinamik web-saytlarning asosiy farqi nimada?", "option_a": "Faqat qora rangdan foydalanadi", "option_b": "Foydalanuvchiga qarab kontentni o'zgartiradi", "option_c": "Internetga ulanmaydi", "option_d": "Brauzersiz ishlaydi", "correct_answer": "B"},
+      {"question": "Veb-brauzerning vazifasi nima?", "option_a": "Veb-sahifani talqin qilish va ko'rsatish", "option_b": "CPU ishlab chiqarish", "option_c": "Faqat video tahrirlash", "option_d": "BIOS yangilash", "correct_answer": "A"},
+      {"question": "URL nima?", "option_a": "Veb-manzil", "option_b": "Operatsion tizim", "option_c": "Grafik muharrir", "option_d": "Parol turi", "correct_answer": "A"},
+      {"question": "Internet va WWW o'rtasidagi to'g'ri munosabat qaysi?", "option_a": "Ular mutlaqo bir xil", "option_b": "WWW internetning bir xizmati", "option_c": "Internet WWWning bir qismi", "option_d": "Ikkalasi aloqasiz", "correct_answer": "B"},
+      {"question": "Web 2.0 tushunchasi nimani ifodalaydi?", "option_a": "Faqat matnli saytlar", "option_b": "Foydalanuvchi ishtiroki va interaktiv platformalar", "option_c": "Internetsiz saytlar", "option_d": "Faqat server tomoni kod", "correct_answer": "B"}
+    ]
+  },
+  {
+    "title": "HTML tiliga kirish",
+    "description": "HTML hujjat tuzilmasi, teglar va asosiy elementlar bo'yicha test.",
+    "difficulty": "beginner",
+    "estimated_time": 12,
+    "questions": [
+      {"question": "HTML nimaning qisqartmasi?", "option_a": "Hyper Text Markup Language", "option_b": "High Transfer Machine Language", "option_c": "Hyperlink Text Manage Language", "option_d": "Home Tool Markup Language", "correct_answer": "A"},
+      {"question": "HTML hujjatining ildiz tegi qaysi?", "option_a": "body", "option_b": "html", "option_c": "head", "option_d": "title", "correct_answer": "B"},
+      {"question": "Brauzer oynasi sarlavhasida ko'rinadigan matn qaysi teg ichida yoziladi?", "option_a": "meta", "option_b": "body", "option_c": "title", "option_d": "header", "correct_answer": "C"},
+      {"question": "Paragraf yaratish uchun qaysi teg ishlatiladi?", "option_a": "p", "option_b": "h1", "option_c": "span", "option_d": "br", "correct_answer": "A"},
+      {"question": "Giperhavola yaratish uchun qaysi teg qo'llaniladi?", "option_a": "img", "option_b": "link", "option_c": "a", "option_d": "nav", "correct_answer": "C"},
+      {"question": "Rasm joylash uchun qaysi teg ishlatiladi?", "option_a": "image", "option_b": "img", "option_c": "picturefile", "option_d": "src", "correct_answer": "B"},
+      {"question": "Yangi qatordan yozishni boshlash uchun qaysi teg ishlatiladi?", "option_a": "hr", "option_b": "br", "option_c": "line", "option_d": "new", "correct_answer": "B"},
+      {"question": "Ro'yxat elementlari uchun qaysi teg ishlatiladi?", "option_a": "li", "option_b": "ol", "option_c": "ul", "option_d": "dl", "correct_answer": "A"},
+      {"question": "HTMLda izoh yozish sintaksisi qaysi?", "option_a": "// izoh", "option_b": "/* izoh */", "option_c": "<!-- izoh -->", "option_d": "# izoh", "correct_answer": "C"},
+      {"question": "id atributining vazifasi nima?", "option_a": "Elementga yagona identifikator berish", "option_b": "Matnni qalin qilish", "option_c": "Faylni saqlash", "option_d": "Serverni ishga tushirish", "correct_answer": "A"}
+    ]
+  },
+  {
+    "title": "HTML5 yangi standartlari va ularning vazifalari",
+    "description": "HTML5 semantik teglar, multimedia va yangi form elementlari bo'yicha test.",
+    "difficulty": "beginner",
+    "estimated_time": 12,
+    "questions": [
+      {"question": "HTML5da sahifaning yuqori qismi uchun qaysi semantik teg ishlatiladi?", "option_a": "section", "option_b": "header", "option_c": "aside", "option_d": "footer", "correct_answer": "B"},
+      {"question": "Navigatsiya havolalari uchun HTML5dagi mos teg qaysi?", "option_a": "nav", "option_b": "menuitem", "option_c": "linkbar", "option_d": "paths", "correct_answer": "A"},
+      {"question": "Video joylash uchun qaysi HTML5 tegi ishlatiladi?", "option_a": "media", "option_b": "movie", "option_c": "video", "option_d": "stream", "correct_answer": "C"},
+      {"question": "Audio faylni bevosita sahifaga qo'shish uchun qaysi teg ishlatiladi?", "option_a": "sound", "option_b": "audio", "option_c": "music", "option_d": "voice", "correct_answer": "B"},
+      {"question": "Canvas elementi nimaga xizmat qiladi?", "option_a": "Server bilan bog'lanish", "option_b": "2D/3D grafik chizish uchun", "option_c": "SQL yozish uchun", "option_d": "Formani yuborish uchun", "correct_answer": "B"},
+      {"question": "Quyidagilardan qaysi biri HTML5 input type hisoblanadi?", "option_a": "date", "option_b": "database", "option_c": "array", "option_d": "session", "correct_answer": "A"},
+      {"question": "main tegi qanday vazifani bajaradi?", "option_a": "Sahifaning asosiy kontentini belgilaydi", "option_b": "Faqat rasm saqlaydi", "option_c": "Parol tekshiradi", "option_d": "Server nomini ko'rsatadi", "correct_answer": "A"},
+      {"question": "localStorage qaysi yo'nalish bilan ko'proq bog'liq?", "option_a": "HTML5 web storage", "option_b": "FTP storage", "option_c": "MySQL view", "option_d": "Printer memory", "correct_answer": "A"},
+      {"question": "article tegi qachon mos keladi?", "option_a": "Mustaqil kontent bloklari uchun", "option_b": "Faqat jadval uchun", "option_c": "Faqat forma uchun", "option_d": "Faqat skript uchun", "correct_answer": "A"},
+      {"question": "HTML5dagi placeholder atributi nima qiladi?", "option_a": "Elementni o'chiradi", "option_b": "Input ichida yo'riqnoma matnini ko'rsatadi", "option_c": "Sahifani yangilaydi", "option_d": "Tugmani yashiradi", "correct_answer": "B"}
+    ]
+  },
+  {
+    "title": "CSS ga kirish. HTMLga ulanish usullari",
+    "description": "CSS nima, HTMLga ulash turlari va sintaksis bo'yicha test.",
+    "difficulty": "beginner",
+    "estimated_time": 12,
+    "questions": [
+      {"question": "CSS nimaning qisqartmasi?", "option_a": "Computer Style Sheets", "option_b": "Cascading Style Sheets", "option_c": "Creative Style System", "option_d": "Colorful Sheet Syntax", "correct_answer": "B"},
+      {"question": "CSSning asosiy vazifasi nima?", "option_a": "Sahifa ko'rinishini bezash", "option_b": "Ma'lumotlar bazasini yaratish", "option_c": "Serverni sozlash", "option_d": "Parolni shifrlash", "correct_answer": "A"},
+      {"question": "Tashqi CSS faylni ulash uchun qaysi teg ishlatiladi?", "option_a": "script", "option_b": "css", "option_c": "link", "option_d": "stylefile", "correct_answer": "C"},
+      {"question": "Internal CSS qayerda yoziladi?", "option_a": "body ichida", "option_b": "style tegi ichida", "option_c": "img atributida", "option_d": "footer ichida", "correct_answer": "B"},
+      {"question": "Inline CSS qayerga yoziladi?", "option_a": "Alohida .css faylga", "option_b": "Elementning style atributiga", "option_c": "Head tegi ichiga", "option_d": "Server konfiguratsiyasiga", "correct_answer": "B"},
+      {"question": "Quyidagilardan qaysi biri to'g'ri CSS qoidasidir?", "option_a": "p = color:red", "option_b": "p { color: red; }", "option_c": "p: color=red", "option_d": "<p color='red'>", "correct_answer": "B"},
+      {"question": "CSS selektori nima uchun kerak?", "option_a": "Elementlarni tanlash uchun", "option_b": "Serverni tanlash uchun", "option_c": "Brauzerni o'chirish uchun", "option_d": "PDF yaratish uchun", "correct_answer": "A"},
+      {"question": "class atributi CSSda qanday belgilanadi?", "option_a": "#nom", "option_b": ".nom", "option_c": "*nom", "option_d": "@nom", "correct_answer": "B"},
+      {"question": "id selektori qaysi belgi bilan boshlanadi?", "option_a": ".", "option_b": "#", "option_c": "@", "option_d": "&", "correct_answer": "B"},
+      {"question": "Tashqi CSS ulanishining afzalligi nima?", "option_a": "Kod qayta foydalaniladi va boshqarish osonlashadi", "option_b": "Internet tezligini pasaytiradi", "option_c": "Faqat bir sahifada ishlaydi", "option_d": "HTMLni o'chiradi", "correct_answer": "A"}
+    ]
+  },
+  {
+    "title": "CSS xususiyatlari",
+    "description": "Matn, rang, oraliq va blok modellari bilan ishlash bo'yicha test.",
+    "difficulty": "beginner",
+    "estimated_time": 12,
+    "questions": [
+      {"question": "Matn rangini o'zgartirish uchun qaysi xossa ishlatiladi?", "option_a": "font-color", "option_b": "text-color", "option_c": "color", "option_d": "foreground", "correct_answer": "C"},
+      {"question": "Elementning orqa fon rangini berish uchun qaysi xossa ishlatiladi?", "option_a": "background-color", "option_b": "bgcolor", "option_c": "color-bg", "option_d": "fill", "correct_answer": "A"},
+      {"question": "Tashqi bo'shliqni ifodalovchi xossa qaysi?", "option_a": "padding", "option_b": "margin", "option_c": "border", "option_d": "outline", "correct_answer": "B"},
+      {"question": "Ichki bo'shliq qaysi xossa bilan belgilanadi?", "option_a": "padding", "option_b": "spacing", "option_c": "margin", "option_d": "indent", "correct_answer": "A"},
+      {"question": "Chegara chizig'ini beruvchi xossa qaysi?", "option_a": "line", "option_b": "frame", "option_c": "border", "option_d": "edge", "correct_answer": "C"},
+      {"question": "Matnni markazga tekislash uchun qaysi xossa qo'llaniladi?", "option_a": "align", "option_b": "text-align", "option_c": "center-text", "option_d": "font-align", "correct_answer": "B"},
+      {"question": "Shrift o'lchamini belgilovchi xossa qaysi?", "option_a": "font-size", "option_b": "text-size", "option_c": "size", "option_d": "font-weight", "correct_answer": "A"},
+      {"question": "Qalin shrift uchun qaysi xossa ishlatiladi?", "option_a": "font-style", "option_b": "font-thick", "option_c": "font-weight", "option_d": "weight-text", "correct_answer": "C"},
+      {"question": "display: none; nimani anglatadi?", "option_a": "Element ko'rinadi", "option_b": "Element yashiriladi va joy egallamaydi", "option_c": "Element ustiga chiqadi", "option_d": "Element qizil bo'ladi", "correct_answer": "B"},
+      {"question": "width xossasi nima qiladi?", "option_a": "Element kengligini belgilaydi", "option_b": "Element balandligini belgilaydi", "option_c": "Matn rangini o'zgartiradi", "option_d": "Sahifani skroll qiladi", "correct_answer": "A"}
+    ]
+  },
+  {
+    "title": "CSS3 asoslari",
+    "description": "CSS3ning yangi xossalari, media query, transition va animation mavzulari bo'yicha test.",
+    "difficulty": "intermediate",
+    "estimated_time": 13,
+    "questions": [
+      {"question": "Burchaklarni yumaloqlash uchun qaysi CSS3 xossasi ishlatiladi?", "option_a": "corner-radius", "option_b": "border-radius", "option_c": "radius-border", "option_d": "round-corner", "correct_answer": "B"},
+      {"question": "Elementga soya berish uchun qaysi xossa mos?", "option_a": "shadow", "option_b": "box-shadow", "option_c": "element-shadow", "option_d": "filter-shadow", "correct_answer": "B"},
+      {"question": "Linear gradient uchun qaysi qiymat ishlatiladi?", "option_a": "gradient(linear)", "option_b": "linear-gradient(...)", "option_c": "bg-gradient", "option_d": "gradient-color", "correct_answer": "B"},
+      {"question": "Media query qachon ishlatiladi?", "option_a": "Responsiv dizayn yaratishda", "option_b": "SQL so'rov yozishda", "option_c": "Serverni tiklashda", "option_d": "Rasm kesishda", "correct_answer": "A"},
+      {"question": "Transition xossasi nima beradi?", "option_a": "Elementni o'chiradi", "option_b": "Xossalar o'zgarishini silliq animatsiyalaydi", "option_c": "HTMLni yangilaydi", "option_d": "Formani yuboradi", "correct_answer": "B"},
+      {"question": "Animation yaratishda qaysi @ qoida qo'llaniladi?", "option_a": "@transition", "option_b": "@frames", "option_c": "@keyframes", "option_d": "@animate", "correct_answer": "C"},
+      {"question": "transform: scale(1.2) nima qiladi?", "option_a": "Elementni buradi", "option_b": "Element o'lchamini kattalashtiradi", "option_c": "Elementni yashiradi", "option_d": "Matn rangini o'zgartiradi", "correct_answer": "B"},
+      {"question": "Flexboxning asosiy maqsadi nima?", "option_a": "Moslashuvchan joylashuv yaratish", "option_b": "Ma'lumotlar bazasi tuzish", "option_c": "Audio yozish", "option_d": "Brauzerni almashtirish", "correct_answer": "A"},
+      {"question": "RGBA rang modelidagi A harfi nimani bildiradi?", "option_a": "Alignment", "option_b": "Alpha shaffoflik", "option_c": "Animation", "option_d": "Array", "correct_answer": "B"},
+      {"question": "CSS3da ko'p ustunli layout uchun qaysi xossa mavjud?", "option_a": "column-count", "option_b": "grid-number", "option_c": "multi-column-layout", "option_d": "layout-count", "correct_answer": "A"}
+    ]
+  },
+  {
+    "title": "JavaScript asoslari",
+    "description": "JavaScript sintaksisi, o'zgaruvchilar, operatorlar va shart operatorlari bo'yicha test.",
+    "difficulty": "beginner",
+    "estimated_time": 13,
+    "questions": [
+      {"question": "JavaScript asosan qayerda bajariladi?", "option_a": "Brauzerda", "option_b": "Printerda", "option_c": "BIOSda", "option_d": "PDF ichida", "correct_answer": "A"},
+      {"question": "O'zgaruvchi e'lon qilishning zamonaviy usuli qaysi?", "option_a": "dim", "option_b": "varonly", "option_c": "let", "option_d": "newvar", "correct_answer": "C"},
+      {"question": "Doimiy qiymat uchun qaysi kalit so'z ishlatiladi?", "option_a": "const", "option_b": "fixed", "option_c": "final", "option_d": "static", "correct_answer": "A"},
+      {"question": "Qattiq tenglik operatori qaysi?", "option_a": "=", "option_b": "==", "option_c": "===", "option_d": "!=", "correct_answer": "C"},
+      {"question": "if operatorining vazifasi nima?", "option_a": "Takrorlash", "option_b": "Shart asosida kod bajarish", "option_c": "Rasm chizish", "option_d": "Kod o'chirish", "correct_answer": "B"},
+      {"question": "Massiv yaratishning to'g'ri ko'rinishi qaysi?", "option_a": "{1,2,3}", "option_b": "(1,2,3)", "option_c": "[1,2,3]", "option_d": "<1,2,3>", "correct_answer": "C"},
+      {"question": "Konsolga qiymat chiqarish uchun qaysi metod ishlatiladi?", "option_a": "console.write()", "option_b": "console.log()", "option_c": "print.console()", "option_d": "echo()", "correct_answer": "B"},
+      {"question": "NaN nimani anglatadi?", "option_a": "No assigned name", "option_b": "Not a Number", "option_c": "New and Null", "option_d": "Node as Network", "correct_answer": "B"},
+      {"question": "for sikli qachon ishlatiladi?", "option_a": "Takrorlanuvchi amallar uchun", "option_b": "Faqat rang berish uchun", "option_c": "Faqat funksiya e'lon qilish uchun", "option_d": "Serverni tiklash uchun", "correct_answer": "A"},
+      {"question": "JavaScriptda satr turi qaysi?", "option_a": "text", "option_b": "varchar", "option_c": "string", "option_d": "charlist", "correct_answer": "C"}
+    ]
+  },
+  {
+    "title": "JavaScript funksiyalari va ob’ektlari",
+    "description": "Funksiya yaratish, parametrlar, return va object literal bo'yicha test.",
+    "difficulty": "intermediate",
+    "estimated_time": 13,
+    "questions": [
+      {"question": "Funksiya e'lon qilishning to'g'ri ko'rinishi qaysi?", "option_a": "function myFunc() {}", "option_b": "func myFunc[]", "option_c": "def myFunc()", "option_d": "function = myFunc", "correct_answer": "A"},
+      {"question": "Funksiya parametri nima?", "option_a": "Funksiyaga uzatiladigan qiymat qabul qiluvchisi", "option_b": "Brauzer oynasi", "option_c": "CSS selektori", "option_d": "HTML tegi", "correct_answer": "A"},
+      {"question": "return operatori nima qiladi?", "option_a": "Sahifani yangilaydi", "option_b": "Qiymatni funksiyadan qaytaradi", "option_c": "Kod blokini yopadi", "option_d": "Fayl yaratadi", "correct_answer": "B"},
+      {"question": "Arrow function uchun to'g'ri misol qaysi?", "option_a": "() => {}", "option_b": "=> () {}", "option_c": "function => {}", "option_d": "arrow() -> {}", "correct_answer": "A"},
+      {"question": "Object literal yaratish uchun qaysi belgilardan foydalaniladi?", "option_a": "[]", "option_b": "()", "option_c": "{}", "option_d": "<>", "correct_answer": "C"},
+      {"question": "obj.name yozuvi nimani bildiradi?", "option_a": "Ob'ektning name xossasiga murojaat", "option_b": "Yangi ob'ekt yaratish", "option_c": "Array elementini o'chirish", "option_d": "Funksiya chaqirishni taqiqlash", "correct_answer": "A"},
+      {"question": "this kalit so'zi ko'pincha nimani bildiradi?", "option_a": "Joriy kontekst ob'ektini", "option_b": "Faqat global CSSni", "option_c": "Yangi satrni", "option_d": "Brauzer tarixini", "correct_answer": "A"},
+      {"question": "Method nima?", "option_a": "Ob'ekt ichidagi funksiya", "option_b": "Faqat son", "option_c": "CSS klass", "option_d": "SQL jadval", "correct_answer": "A"},
+      {"question": "Arrayning uzunligini olish uchun qaysi xossa ishlatiladi?", "option_a": "size", "option_b": "count", "option_c": "length", "option_d": "index", "correct_answer": "C"},
+      {"question": "Quyidagilardan qaysi biri ob'ektga xossa qo'shadi?", "option_a": "obj = []", "option_b": "obj.age = 20", "option_c": "obj(age)=20", "option_d": "obj->age=20", "correct_answer": "B"}
+    ]
+  },
+  {
+    "title": "JavaScript brauzer va veb-hujjat ob’ektlari modeli bilan ishlash",
+    "description": "DOM, BOM, hodisalar va elementlar bilan ishlash bo'yicha test.",
+    "difficulty": "intermediate",
+    "estimated_time": 14,
+    "questions": [
+      {"question": "DOM nimani anglatadi?", "option_a": "Document Object Model", "option_b": "Data Object Method", "option_c": "Display Oriented Mode", "option_d": "Document Output Map", "correct_answer": "A"},
+      {"question": "HTML elementini id orqali tanlash uchun qaysi metod ishlatiladi?", "option_a": "query.id()", "option_b": "getElementById()", "option_c": "getByClass()", "option_d": "selectNode()", "correct_answer": "B"},
+      {"question": "Bir nechta elementni CSS selektor bilan olish uchun qaysi metod qulay?", "option_a": "querySelectorAll()", "option_b": "getElementByTag()", "option_c": "selectAllNodes()", "option_d": "findElements()", "correct_answer": "A"},
+      {"question": "addEventListener nima uchun ishlatiladi?", "option_a": "Hodisani tinglash uchun", "option_b": "Serverni ulash uchun", "option_c": "MySQL yaratish uchun", "option_d": "PDF yuklash uchun", "correct_answer": "A"},
+      {"question": "click hodisasi qachon yuz beradi?", "option_a": "Sahifa yopilganda", "option_b": "Element bosilganda", "option_c": "Server ishga tushganda", "option_d": "Kod kompilyatsiya bo'lganda", "correct_answer": "B"},
+      {"question": "innerHTML xossasi nima qiladi?", "option_a": "Element ichki HTMLini o'qiydi yoki o'zgartiradi", "option_b": "Faqat rang beradi", "option_c": "Cookie o'chiradi", "option_d": "Brauzerni yopadi", "correct_answer": "A"},
+      {"question": "window ob'ekti qaysi modelga tegishli?", "option_a": "DOM", "option_b": "BOM", "option_c": "SQL", "option_d": "CSSOM", "correct_answer": "B"},
+      {"question": "alert() funksiyasi nimani bajaradi?", "option_a": "Dialog oynasini ko'rsatadi", "option_b": "DOMni o'chiradi", "option_c": "Serverga ulanadi", "option_d": "Formani yuboradi", "correct_answer": "A"},
+      {"question": "document.createElement() nima uchun kerak?", "option_a": "Yangi DOM elementi yaratish uchun", "option_b": "Brauzer tarixini ko'rish uchun", "option_c": "SQL so'rov yuborish uchun", "option_d": "Cookie yozish uchun", "correct_answer": "A"},
+      {"question": "preventDefault() metodining vazifasi nima?", "option_a": "Brauzerning standart harakatini to'xtatadi", "option_b": "Kompyuterni o'chiradi", "option_c": "JavaScriptni bloklaydi", "option_d": "Elementni yashiradi", "correct_answer": "A"}
+    ]
+  },
+  {
+    "title": "PHP funksiyalari, ob’ektlari",
+    "description": "PHP sintaksisi, funksiya yaratish va oddiy ob'ektlar bilan ishlash bo'yicha test.",
+    "difficulty": "intermediate",
+    "estimated_time": 13,
+    "questions": [
+      {"question": "PHP kodi odatda qaysi belgilar orasida yoziladi?", "option_a": "<js> </js>", "option_b": "<?php ?>", "option_c": "<php> </php>", "option_d": "{{ }}", "correct_answer": "B"},
+      {"question": "PHPda o'zgaruvchi qaysi belgi bilan boshlanadi?", "option_a": "#", "option_b": "@", "option_c": "$", "option_d": "%", "correct_answer": "C"},
+      {"question": "Funksiya e'lon qilish uchun qaysi kalit so'z ishlatiladi?", "option_a": "def", "option_b": "function", "option_c": "func", "option_d": "method", "correct_answer": "B"},
+      {"question": "Qiymatni ekranga chiqarishning keng tarqalgan usuli qaysi?", "option_a": "echo", "option_b": "println", "option_c": "console.log", "option_d": "put", "correct_answer": "A"},
+      {"question": "PHPda massiv yaratishning to'g'ri usuli qaysi?", "option_a": "array(1,2,3)", "option_b": "{1,2,3}", "option_c": "[1;2;3]", "option_d": "list{1,2,3}", "correct_answer": "A"},
+      {"question": "Classdan obyekt yaratish uchun qaysi kalit so'z ishlatiladi?", "option_a": "make", "option_b": "create", "option_c": "new", "option_d": "object", "correct_answer": "C"},
+      {"question": "Metod ichida joriy ob'ektga murojaat qaysi ifoda bilan qilinadi?", "option_a": "$this", "option_b": "this", "option_c": "self", "option_d": "$self->", "correct_answer": "A"},
+      {"question": "PHPda satr birlashtirish operatori qaysi?", "option_a": "+", "option_b": ".", "option_c": "&", "option_d": "::", "correct_answer": "B"},
+      {"question": "count() funksiyasi nima qiladi?", "option_a": "Massiv elementlari sonini qaytaradi", "option_b": "Sahifa rangini o'zgartiradi", "option_c": "Serverni sanaydi", "option_d": "Cookie yaratadi", "correct_answer": "A"},
+      {"question": "strlen() funksiyasi qanday natija beradi?", "option_a": "Satr uzunligini", "option_b": "Massiv uzunligini", "option_c": "Fayl hajmini", "option_d": "Rasm o'lchamini", "correct_answer": "A"}
+    ]
+  },
+  {
+    "title": "PHPda global o‘zgaruvchilar",
+    "description": "Superglobal massivlar va scope masalalari bo'yicha test.",
+    "difficulty": "intermediate",
+    "estimated_time": 12,
+    "questions": [
+      {"question": "PHPdagi superglobal o'zgaruvchi qaysi?", "option_a": "$_GET", "option_b": "$get", "option_c": "$global", "option_d": "$requestOnly", "correct_answer": "A"},
+      {"question": "URL query parametrlarini olish uchun qaysi massiv ishlatiladi?", "option_a": "$_POST", "option_b": "$_SERVER", "option_c": "$_GET", "option_d": "$_FILES", "correct_answer": "C"},
+      {"question": "Forma POST usulida yuborilganda ma'lumotni qaysi massivdan olamiz?", "option_a": "$_GET", "option_b": "$_POST", "option_c": "$_COOKIE", "option_d": "$_SESSION", "correct_answer": "B"},
+      {"question": "Sessiya ma'lumotlarini saqlash uchun qaysi superglobal ishlatiladi?", "option_a": "$_ENV", "option_b": "$_FILES", "option_c": "$_SESSION", "option_d": "$_SERVER", "correct_answer": "C"},
+      {"question": "Cookie ma'lumotlari qaysi massivda bo'ladi?", "option_a": "$_COOKIE", "option_b": "$_SESSION", "option_c": "$_GET", "option_d": "$_ENV", "correct_answer": "A"},
+      {"question": "Fayl yuklash bilan bog'liq ma'lumot qaysi massivda saqlanadi?", "option_a": "$_POST", "option_b": "$_FILES", "option_c": "$_REQUEST", "option_d": "$_SERVER", "correct_answer": "B"},
+      {"question": "global kalit so'zi nima uchun ishlatiladi?", "option_a": "Funksiya ichida tashqi o'zgaruvchiga murojaat qilish uchun", "option_b": "Class yaratish uchun", "option_c": "Cookie o'chirish uchun", "option_d": "SQLni himoyalash uchun", "correct_answer": "A"},
+      {"question": "$_SERVER superglobali odatda nimani saqlaydi?", "option_a": "Server va so'rov muhiti haqidagi ma'lumotlar", "option_b": "Faqat foydalanuvchi rasmi", "option_c": "Ma'lumotlar bazasi jadvallari", "option_d": "CSS xossalari", "correct_answer": "A"},
+      {"question": "$_REQUEST odatda nimani birlashtiradi?", "option_a": "Faqat GET", "option_b": "Faqat POST", "option_c": "GET, POST va COOKIE qiymatlarini", "option_d": "Faqat SESSIONni", "correct_answer": "C"},
+      {"question": "Session bilan ishlashni boshlash uchun qaysi funksiya kerak?", "option_a": "session_begin()", "option_b": "start_session()", "option_c": "session_start()", "option_d": "$_SESSION.start()", "correct_answer": "C"}
+    ]
+  },
+  {
+    "title": "PHPda ob’ektga yo‘naltirilgan dasturlash",
+    "description": "Class, object, visibility, inheritance va encapsulation bo'yicha test.",
+    "difficulty": "intermediate",
+    "estimated_time": 14,
+    "questions": [
+      {"question": "Class nima?", "option_a": "Ob'ekt yaratish uchun shablon", "option_b": "Ma'lumotlar bazasi", "option_c": "Brauzer oynasi", "option_d": "CSS fayli", "correct_answer": "A"},
+      {"question": "Ob'ekt nima?", "option_a": "Classning nusxasi", "option_b": "Fayl turi", "option_c": "HTTP so'rov", "option_d": "Loop operatori", "correct_answer": "A"},
+      {"question": "public visibility nimani bildiradi?", "option_a": "Faqat class ichida ko'rinadi", "option_b": "Hamma joydan murojaat qilish mumkin", "option_c": "Faqat merosxo'r classda", "option_d": "Faqat serverda", "correct_answer": "B"},
+      {"question": "private visibility nimani anglatadi?", "option_a": "Faqat class ichida foydalaniladi", "option_b": "Hamma joydan ochiq", "option_c": "Faqat brauzerda", "option_d": "Faqat sessiyada", "correct_answer": "A"},
+      {"question": "protected visibility qayerda ishlatiladi?", "option_a": "Class va undan meros olgan classlarda", "option_b": "Faqat global scope", "option_c": "Faqat HTML ichida", "option_d": "Faqat SQLda", "correct_answer": "A"},
+      {"question": "Constructorning vazifasi nima?", "option_a": "Ob'ekt yaratilganda boshlang'ich sozlash bajaradi", "option_b": "Classni o'chiradi", "option_c": "Brauzerni yopadi", "option_d": "MySQLga ulanadi", "correct_answer": "A"},
+      {"question": "PHPda constructor metodi qanday nomlanadi?", "option_a": "_construct", "option_b": "construct", "option_c": "__construct", "option_d": "init", "correct_answer": "C"},
+      {"question": "Inheritance nima?", "option_a": "Bir classning boshqasidan xususiyat va metodlarni meros olishi", "option_b": "Parol shifrlash", "option_c": "CSS ulash", "option_d": "Jadval yaratish", "correct_answer": "A"},
+      {"question": "Static xossa yoki metodga murojaat qaysi operator orqali qilinadi?", "option_a": "->", "option_b": "::", "option_c": ".", "option_d": "=>", "correct_answer": "B"},
+      {"question": "Encapsulation mohiyati nimada?", "option_a": "Ma'lumot va metodlarni bitta classda jamlash hamda himoyalash", "option_b": "Faqat meros olish", "option_c": "Faqat funksiya yozish", "option_d": "Sahifani bezash", "correct_answer": "A"}
+    ]
+  },
+  {
+    "title": "PHPda MySQL ma’lumotlar bazasini boshqarish tizimi bilan ishlash",
+    "description": "PHP orqali MySQLga ulanish, CRUD va prepared statements bo'yicha test.",
+    "difficulty": "advanced",
+    "estimated_time": 15,
+    "questions": [
+      {"question": "PHPda MySQL bilan ishlash uchun keng tarqalgan kengaytma qaysi?", "option_a": "mysqli", "option_b": "mysqlcss", "option_c": "phpsqlui", "option_d": "dbhtml", "correct_answer": "A"},
+      {"question": "Ma'lumotlar bazasiga ulanish uchun qaysi funksiyadan foydalaniladi?", "option_a": "mysqli_connect()", "option_b": "sql_open()", "option_c": "db_start()", "option_d": "mysql_begin()", "correct_answer": "A"},
+      {"question": "SELECT so'rovi nimaga xizmat qiladi?", "option_a": "Ma'lumot o'qish uchun", "option_b": "Jadvalni o'chirish uchun", "option_c": "Serverni qayta yuklash uchun", "option_d": "Fayl yuklash uchun", "correct_answer": "A"},
+      {"question": "INSERT operatorining vazifasi nima?", "option_a": "Yangi yozuv qo'shish", "option_b": "Jadval yaratish", "option_c": "Yozuvni qidirish", "option_d": "Kodni kompilyatsiya qilish", "correct_answer": "A"},
+      {"question": "UPDATE operatori nima qiladi?", "option_a": "Mavjud yozuvlarni yangilaydi", "option_b": "Server portini o'zgartiradi", "option_c": "Faylni yuklaydi", "option_d": "HTML sahifa yaratadi", "correct_answer": "A"},
+      {"question": "DELETE operatori nima qiladi?", "option_a": "Yozuvlarni o'chiradi", "option_b": "Jadval ustun qo'shadi", "option_c": "Database nomini o'zgartiradi", "option_d": "Parol yaratadi", "correct_answer": "A"},
+      {"question": "SQL injectiondan himoyalanish uchun eng to'g'ri yondashuv qaysi?", "option_a": "Prepared statement ishlatish", "option_b": "Har doim GET ishlatish", "option_c": "Faqat HTML5 ishlatish", "option_d": "Ranglarni almashtirish", "correct_answer": "A"},
+      {"question": "Natijani assotsiativ massiv sifatida olish uchun qaysi metod ishlatiladi?", "option_a": "fetch_assoc()", "option_b": "fetch_array_only()", "option_c": "get_object()", "option_d": "read_map()", "correct_answer": "A"},
+      {"question": "PDOning asosiy afzalliklaridan biri nima?", "option_a": "Turli DBMS bilan bir xil interfeysda ishlash", "option_b": "Faqat CSS yozadi", "option_c": "Internetni tezlashtiradi", "option_d": "Brauzerni yangilaydi", "correct_answer": "A"},
+      {"question": "Prepared statementda parametrlarni bog'lashning maqsadi nima?", "option_a": "Xavfsizlik va qulaylikni oshirish", "option_b": "Rasmni kichraytirish", "option_c": "PHPni HTMLga aylantirish", "option_d": "Server vaqtini o'chirish", "correct_answer": "A"}
+    ]
+  },
+  {
+    "title": "Web-saytlarni ishlab chiqish Backend",
+    "description": "Backend arxitekturasi, API, autentifikatsiya va server mantiqi bo'yicha test.",
+    "difficulty": "advanced",
+    "estimated_time": 15,
+    "questions": [
+      {"question": "Backendning asosiy vazifasi nima?", "option_a": "Server tomonda biznes mantiqni bajarish", "option_b": "Faqat rang tanlash", "option_c": "Faqat rasm chizish", "option_d": "Printer drayverini sozlash", "correct_answer": "A"},
+      {"question": "API nima?", "option_a": "Dasturlararo aloqa interfeysi", "option_b": "Faqat grafik editor", "option_c": "Operatsion tizim yadro qismi", "option_d": "Brauzer plagini", "correct_answer": "A"},
+      {"question": "REST APIda ma'lumot olish uchun ko'p ishlatiladigan metod qaysi?", "option_a": "POST", "option_b": "PUT", "option_c": "GET", "option_d": "PATCH", "correct_answer": "C"},
+      {"question": "Yangi resurs yaratish uchun odatda qaysi HTTP metod ishlatiladi?", "option_a": "DELETE", "option_b": "POST", "option_c": "GET", "option_d": "HEAD", "correct_answer": "B"},
+      {"question": "Autentifikatsiya nima?", "option_a": "Foydalanuvchini tekshirish jarayoni", "option_b": "Ma'lumotni bezash", "option_c": "Jadval rangini o'zgartirish", "option_d": "Rasmni siqish", "correct_answer": "A"},
+      {"question": "Avtorizatsiya nimani bildiradi?", "option_a": "Foydalanuvchiga qanday huquqlar berilganini aniqlash", "option_b": "Parol yaratish", "option_c": "Domen sotib olish", "option_d": "DNS o'chirish", "correct_answer": "A"},
+      {"question": "JSON formatining backenddagi ahamiyati nima?", "option_a": "Ma'lumot almashish uchun yengil format", "option_b": "Faqat rasm saqlash uchun", "option_c": "Audio stream qilish uchun", "option_d": "CSS o'rnini bosadi", "correct_answer": "A"},
+      {"question": "Middleware nima qiladi?", "option_a": "So'rov va javob orasida qo'shimcha ishlov beradi", "option_b": "Faqat HTML chizadi", "option_c": "MySQLni o'chiradi", "option_d": "Monitor sozlaydi", "correct_answer": "A"},
+      {"question": "Server-side validation nima uchun kerak?", "option_a": "Xavfsizlik va to'g'rilikni ta'minlash uchun", "option_b": "Faqat dizaynni yaxshilash uchun", "option_c": "Kompyuterni tezlashtirish uchun", "option_d": "Ranglarni saqlash uchun", "correct_answer": "A"},
+      {"question": "Backend frameworkdan foydalanishning foydasi nimada?", "option_a": "Tayyor arxitektura va tez rivojlantirish imkonini beradi", "option_b": "Internetni butunlay almashtiradi", "option_c": "HTMLni keraksiz qiladi", "option_d": "Brauzerni bloklaydi", "correct_answer": "A"}
+    ]
+  },
+  {
+    "title": "CMS texnologiyasini qo‘llash",
+    "description": "CMS mazmuni, afzalliklari, plugin, theme va amaliy qo'llash bo'yicha test.",
+    "difficulty": "intermediate",
+    "estimated_time": 12,
+    "questions": [
+      {"question": "CMS nimaning qisqartmasi?", "option_a": "Content Management System", "option_b": "Computer Media Service", "option_c": "Central Module System", "option_d": "Content Media Syntax", "correct_answer": "A"},
+      {"question": "CMSning asosiy vazifasi nima?", "option_a": "Kontentni kodsiz yoki kam kod bilan boshqarish", "option_b": "Faqat operatsion tizim o'rnatish", "option_c": "Printer sozlash", "option_d": "BIOS yangilash", "correct_answer": "A"},
+      {"question": "WordPress qaysi turdagi platformaga misol bo'ladi?", "option_a": "CMS", "option_b": "Brauzer", "option_c": "DBMS", "option_d": "Protokol", "correct_answer": "A"},
+      {"question": "Theme CMSda nimani o'zgartiradi?", "option_a": "Tashqi ko'rinishni", "option_b": "Server operatsion tizimini", "option_c": "CPU tezligini", "option_d": "Internet kabelini", "correct_answer": "A"},
+      {"question": "Pluginning vazifasi nima?", "option_a": "Qo'shimcha funksionallik qo'shish", "option_b": "Faqat matn yozish", "option_c": "Monitorni yoqish", "option_d": "MySQLni o'chirish", "correct_answer": "A"},
+      {"question": "CMSdan foydalanishning afzalligi qaysi?", "option_a": "Rivojlantirish vaqtini qisqartiradi", "option_b": "Internetni o'chiradi", "option_c": "Kod yozishni majburiy qiladi", "option_d": "Faqat lokal ishlaydi", "correct_answer": "A"},
+      {"question": "Admin panel CMSda nima uchun kerak?", "option_a": "Kontent va sozlamalarni boshqarish uchun", "option_b": "Faqat video ko'rish uchun", "option_c": "Brauzer yaratish uchun", "option_d": "SQLni yashirish uchun", "correct_answer": "A"},
+      {"question": "CMS tanlashda qaysi omil muhim?", "option_a": "Loyiha ehtiyoji va kengayish imkoniyati", "option_b": "Faqat logotip rangi", "option_c": "Klaviatura turi", "option_d": "Printer brendi", "correct_answer": "A"},
+      {"question": "Headless CMS nimani anglatadi?", "option_a": "Frontend va backend ajratilgan CMS", "option_b": "Monitorsiz server", "option_c": "Faqat audio uchun CMS", "option_d": "Internetsiz CMS", "correct_answer": "A"},
+      {"question": "CMS xavfsizligi uchun muhim choralar qaysi?", "option_a": "Yadro va pluginlarni yangilab borish", "option_b": "Parolni hammaga berish", "option_c": "SSLni o'chirish", "option_d": "Admin URLni forumga joylash", "correct_answer": "A"}
+    ]
+  }
+]

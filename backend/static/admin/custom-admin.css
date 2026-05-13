@@ -1,0 +1,40 @@
+:root {
+  --primary: #7c3aed;
+  --secondary: #06b6d4;
+  --accent: #f59e0b;
+}
+
+#header {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #fff;
+}
+
+#branding h1 a,
+#branding h1 {
+  color: #fff;
+}
+
+.brand-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-subtitle {
+  margin: 0;
+  opacity: 0.85;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+  background: linear-gradient(90deg, rgba(124, 58, 237, 0.95), rgba(6, 182, 212, 0.9));
+}
+
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input,
+a.button {
+  background: var(--primary);
+}
