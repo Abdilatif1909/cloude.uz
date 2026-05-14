@@ -10,11 +10,7 @@ PROJECT_ROOT = BASE_DIR.parent
 SECRET_KEY = config("SECRET_KEY", default="django-insecure-webdasturlashedu-backend")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default="127.0.0.1,localhost,api.cloude.uz",
-    cast=Csv(),
-)
+ALLOWED_HOSTS = ["*"]
 
 RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default="")
 if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
@@ -138,11 +134,9 @@ CORS_ALLOWED_ORIGINS = config(
 )
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = config(
-    "CSRF_TRUSTED_ORIGINS",
-    default="https://cloude.uz,https://api.cloude.uz",
-    cast=Csv(),
-)
+CSRF_TRUSTED_ORIGINS = [
+    "https://abdilatif.pythonanywhere.com",
+]
 
 PDF_IMPORT_DIRECTORIES = {
     "lectures": PROJECT_ROOT / "pdf" / "maruza",
