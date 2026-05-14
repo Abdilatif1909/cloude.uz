@@ -1,4 +1,4 @@
-from django.http import FileResponse
+from django.shortcuts import redirect
 from rest_framework import decorators, response, viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 
@@ -21,7 +21,9 @@ class BaseMaterialViewSet(viewsets.ModelViewSet):
     @decorators.action(detail=True, methods=["get"])
     def download(self, request, pk=None):
         instance = self.get_object()
-        return FileResponse(instance.file.open("rb"), as_attachment=True, filename=instance.file.name.split("/")[-1])
+        if instance.download_url:
+            return redirect(instance.download_url)
+        return response.Response({"detail": "PDF URL mavjud emas."}, status=404)
 
 
 class LectureViewSet(BaseMaterialViewSet):

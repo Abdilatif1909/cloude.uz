@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from django.conf import settings
-from django.core.files import File
 from django.db import transaction
 
 from apps.books.models import Book
@@ -26,16 +25,14 @@ def _hash_file(file_path: Path) -> str:
     return digest.hexdigest()
 
 
-def _sync_pdf_directory(directory: Path, model_class, upload_prefix: str) -> ImportSummary:
+def _sync_pdf_directory(directory: Path, model_class) -> ImportSummary:
     summary = ImportSummary()
     directory.mkdir(parents=True, exist_ok=True)
 
     for pdf_path in sorted(directory.glob("*.pdf")):
         file_hash = _hash_file(pdf_path)
         source_path = str(pdf_path.resolve())
-        if model_class.objects.filter(file_hash=file_hash).exists() or model_class.objects.filter(source_path=source_path).exists():
-            summary.skipped += 1
-            continue
+        instance = model_class.objects.filter(file_hash=file_hash).first() or model_class.objects.filter(source_path=source_path).first()
 
         with transaction.atomic():
             instance_kwargs = {
@@ -46,19 +43,29 @@ def _sync_pdf_directory(directory: Path, model_class, upload_prefix: str) -> Imp
             if hasattr(model_class, "author"):
                 instance_kwargs["author"] = "Local PDF Library"
 
-            instance = model_class(**instance_kwargs)
-            with pdf_path.open("rb") as stream:
-                instance.file.save(pdf_path.name, File(stream), save=False)
-            instance.save()
-            summary.created += 1
+            if instance:
+                changed = False
+                for key, value in instance_kwargs.items():
+                    if getattr(instance, key) != value:
+                        setattr(instance, key, value)
+                        changed = True
+                if getattr(instance, "file", None):
+                    instance.file = None
+                    changed = True
+                if changed:
+                    instance.save(update_fields=[*instance_kwargs.keys(), "file"])
+                summary.skipped += 1
+            else:
+                model_class.objects.create(**instance_kwargs)
+                summary.created += 1
 
     return summary
 
 
 def import_pdfs() -> dict[str, ImportSummary]:
-    lecture_summary = _sync_pdf_directory(settings.PDF_IMPORT_DIRECTORIES["lectures"], Lecture, "lectures")
-    practical_summary = _sync_pdf_directory(settings.PDF_IMPORT_DIRECTORIES["practicals"], Practical, "practicals")
-    book_summary = _sync_pdf_directory(settings.PDF_IMPORT_DIRECTORIES["books"], Book, "books")
+    lecture_summary = _sync_pdf_directory(settings.PDF_IMPORT_DIRECTORIES["lectures"], Lecture)
+    practical_summary = _sync_pdf_directory(settings.PDF_IMPORT_DIRECTORIES["practicals"], Practical)
+    book_summary = _sync_pdf_directory(settings.PDF_IMPORT_DIRECTORIES["books"], Book)
     return {"lectures": lecture_summary, "practicals": practical_summary, "books": book_summary}
 
 

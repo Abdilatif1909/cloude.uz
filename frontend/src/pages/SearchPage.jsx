@@ -95,7 +95,9 @@ function SearchPage() {
 
                         <p className="text-muted mt-2 text-sm leading-relaxed">
                           {item.author ||
-                            item.file_url?.split('/').pop() ||
+                            item.file_name ||
+                            item.source_path?.split(/[\\/]/).pop() ||
+                            item.pdf_url?.split('/').pop() ||
                             'Material'}
                         </p>
                       </div>

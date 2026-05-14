@@ -2,6 +2,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { FiDownload, FiX } from 'react-icons/fi';
 
 function PdfViewerModal({ item, open, onClose, onDownload }) {
+  const pdfUrl = item?.pdf_url || item?.file_url || item?.download_url;
+  const downloadUrl = item?.download_url || pdfUrl;
+
   return (
     <AnimatePresence>
       {open && item ? (
@@ -23,21 +26,29 @@ function PdfViewerModal({ item, open, onClose, onDownload }) {
                 <h3 className="mt-2 text-lg font-semibold">{item.title}</h3>
               </div>
               <div className="flex items-center gap-2">
-                <a
-                  href={item.file_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => onDownload?.(item)}
-                  className="glass-button rounded-2xl px-4 py-2 text-sm font-semibold"
-                >
-                  <span className="inline-flex items-center gap-2"><FiDownload /> Yuklab olish</span>
-                </a>
+                {downloadUrl ? (
+                  <a
+                    href={downloadUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => onDownload?.(item)}
+                    className="glass-button rounded-2xl px-4 py-2 text-sm font-semibold"
+                  >
+                    <span className="inline-flex items-center gap-2"><FiDownload /> Yuklab olish</span>
+                  </a>
+                ) : null}
                 <button type="button" onClick={onClose} className="glass-button rounded-2xl p-3">
                   <FiX />
                 </button>
               </div>
             </div>
-            <iframe src={item.file_url} title={item.title} className="h-full w-full bg-white" />
+            {pdfUrl ? (
+              <iframe src={pdfUrl} title={item.title} className="h-full w-full bg-white" />
+            ) : (
+              <div className="flex h-full items-center justify-center bg-white text-slate-500">
+                PDF URL topilmadi.
+              </div>
+            )}
           </motion.div>
         </motion.div>
       ) : null}

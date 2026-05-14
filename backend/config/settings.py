@@ -6,6 +6,10 @@ from decouple import Csv, config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ROOT = BASE_DIR.parent
+GITHUB_RAW_BASE_URL = config(
+    "GITHUB_RAW_BASE_URL",
+    default="https://raw.githubusercontent.com/Abdilatif1909/cloude.uz/main",
+)
 
 SECRET_KEY = config("SECRET_KEY", default="django-insecure-webdasturlashedu-backend")
 DEBUG = config("DEBUG", default=False, cast=bool)
