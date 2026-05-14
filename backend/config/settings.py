@@ -10,13 +10,22 @@ PROJECT_ROOT = BASE_DIR.parent
 SECRET_KEY = config("SECRET_KEY", default="django-insecure-webdasturlashedu-backend")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = [
+DEFAULT_ALLOWED_HOSTS = [
     "abdilatif.pythonanywhere.com",
     "127.0.0.1",
     "localhost",
     "cloude.uz",
     "www.cloude.uz",
+    "cloude-uz.vercel.app",
 ]
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS",
+    default=",".join(DEFAULT_ALLOWED_HOSTS),
+    cast=Csv(),
+)
+for host in DEFAULT_ALLOWED_HOSTS:
+    if host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(host)
 
 RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default="")
 if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
@@ -133,16 +142,37 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = False
+DEFAULT_CORS_ALLOWED_ORIGINS = [
+    "https://cloude.uz",
+    "https://www.cloude.uz",
+    "https://cloude-uz.vercel.app",
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
+]
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS",
-    default="https://cloude.uz",
+    default=",".join(DEFAULT_CORS_ALLOWED_ORIGINS),
     cast=Csv(),
 )
+for origin in DEFAULT_CORS_ALLOWED_ORIGINS:
+    if origin not in CORS_ALLOWED_ORIGINS:
+        CORS_ALLOWED_ORIGINS.append(origin)
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = [
+DEFAULT_CSRF_TRUSTED_ORIGINS = [
     "https://abdilatif.pythonanywhere.com",
+    "https://cloude.uz",
+    "https://www.cloude.uz",
+    "https://cloude-uz.vercel.app",
 ]
+CSRF_TRUSTED_ORIGINS = config(
+    "CSRF_TRUSTED_ORIGINS",
+    default=",".join(DEFAULT_CSRF_TRUSTED_ORIGINS),
+    cast=Csv(),
+)
+for origin in DEFAULT_CSRF_TRUSTED_ORIGINS:
+    if origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(origin)
 
 PDF_IMPORT_DIRECTORIES = {
     "lectures": PROJECT_ROOT / "pdf" / "maruza",

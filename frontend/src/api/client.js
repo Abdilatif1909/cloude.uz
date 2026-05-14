@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
+const DEFAULT_API_BASE_URL = 'https://abdilatif.pythonanywhere.com/api';
+const API_BASE_URL = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL).replace(/\/+$/, '');
 const ACCESS_TOKEN_KEY = 'webedu_access';
 const REFRESH_TOKEN_KEY = 'webedu_refresh';
 const USER_KEY = 'webedu_user';

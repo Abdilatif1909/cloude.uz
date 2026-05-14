@@ -60,3 +60,10 @@ def import_pdfs() -> dict[str, ImportSummary]:
     practical_summary = _sync_pdf_directory(settings.PDF_IMPORT_DIRECTORIES["practicals"], Practical, "practicals")
     book_summary = _sync_pdf_directory(settings.PDF_IMPORT_DIRECTORIES["books"], Book, "books")
     return {"lectures": lecture_summary, "practicals": practical_summary, "books": book_summary}
+
+
+def ensure_pdf_library_seeded() -> None:
+    if Lecture.objects.exists() and Practical.objects.exists() and Book.objects.exists():
+        return
+
+    import_pdfs()

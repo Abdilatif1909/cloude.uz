@@ -2,10 +2,14 @@ import axios from 'axios';
 
 import { sessionStorageUtil } from '../utils/storage';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
+const DEFAULT_API_BASE_URL = 'https://abdilatif.pythonanywhere.com/api';
+const API_BASE_URL = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL).replace(/\/+$/, '');
 
 const http = axios.create({
   baseURL: API_BASE_URL,
+  headers: {
+    Accept: 'application/json',
+  },
 });
 
 http.interceptors.request.use((config) => {

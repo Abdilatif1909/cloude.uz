@@ -4,6 +4,7 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 
 from apps.materials.models import Lecture, Practical
 from apps.materials.serializers import LectureSerializer, PracticalSerializer
+from services.pdf_import_service import ensure_pdf_library_seeded
 from utils.permissions import IsTeacherOrAdminOrReadOnly
 
 
@@ -12,6 +13,10 @@ class BaseMaterialViewSet(viewsets.ModelViewSet):
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ["title"]
     ordering_fields = ["title", "uploaded_at"]
+
+    def get_queryset(self):
+        ensure_pdf_library_seeded()
+        return super().get_queryset()
 
     @decorators.action(detail=True, methods=["get"])
     def download(self, request, pk=None):
