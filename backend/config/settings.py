@@ -10,7 +10,13 @@ PROJECT_ROOT = BASE_DIR.parent
 SECRET_KEY = config("SECRET_KEY", default="django-insecure-webdasturlashedu-backend")
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "abdilatif.pythonanywhere.com",
+    "127.0.0.1",
+    "localhost",
+    "cloude.uz",
+    "www.cloude.uz",
+]
 
 RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default="")
 if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
