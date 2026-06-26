@@ -175,6 +175,10 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [path for path in (BACKEND_STATIC_DIR, FRONTEND_DIST_DIR) if path.exists()]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+WHITENOISE_MIMETYPES = {
+    ".js": "application/javascript",
+    ".mjs": "application/javascript",
+}
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
