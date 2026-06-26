@@ -1,45 +1,47 @@
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { LogIn } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth.jsx';
 
-import { useAuth } from '../contexts/AuthContext';
+const BRAND_LOGO = '/brand-logo.svg';
 
-function LoginPage() {
-  const [form, setForm] = useState({ username: '', password: '' });
-  const [error, setError] = useState('');
+export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
+  const [form, setForm] = useState({ username: '', password: '' });
+  const [error, setError] = useState('');
 
-  const handleSubmit = async (event) => {
+  const submit = async (event) => {
     event.preventDefault();
     setError('');
     try {
-      await login(form);
-      navigate(location.state?.from?.pathname || '/dashboard', { replace: true });
+      await login(form.username, form.password);
+      navigate('/dashboard');
     } catch {
-      setError('Kirish muvaffaqiyatsiz. Ma’lumotlarni tekshiring.');
+      setError('Login yoki parol noto\'g\'ri.');
     }
   };
 
   return (
-    <section className="container-shell py-10">
-      <div className="mx-auto max-w-xl glass-panel rounded-[2rem] p-8 sm:p-10">
-        <h1 className="text-3xl font-black text-[#0f172a]">Tizimga kirish</h1>
-        <p className="mt-3 text-[#334155]">JWT asosidagi xavfsiz autentifikatsiya va himoyalangan yo‘nalishlar oqimi.</p>
-        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-          <input value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} placeholder="Foydalanuvchi nomi" className="input-shell" required />
-          <input type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="Parol" className="input-shell" required />
-          {error ? <div className="rounded-2xl bg-[#fff1f1] px-4 py-3 text-sm text-[#d64545]">{error}</div> : null}
-          <button type="submit" className="brand-primary w-full rounded-2xl px-6 py-4 font-semibold">
-            Kirish
-          </button>
-        </form>
-        <p className="mt-5 text-sm text-[#64748b]">
-          Akkount yo‘qmi? <Link to="/register" className="font-semibold text-[#2563eb]">Ro‘yxatdan o‘ting</Link>
-        </p>
+    <div className="page-shell">
+      <div className="row justify-content-center align-items-center" style={{ minHeight: '68vh' }}>
+        <div className="col-lg-5">
+          <div className="glass-card p-4 p-md-5">
+            <img className="brand-logo brand-logo-login mb-4" src={BRAND_LOGO} alt="Axborot Texnologiyalari va Menejment Universiteti logo" />
+            <span className="eyebrow">Secure access</span>
+            <h1 className="h2 fw-bold mt-3 mb-2">Cloud Education Platform</h1>
+            <p className="text-muted">cloude.uz orqali Sun'iy intellekt asoslari kursiga kiring.</p>
+            {error && <div className="alert alert-danger">{error}</div>}
+            <form onSubmit={submit}>
+              <label className="form-label fw-semibold">Username</label>
+              <input className="form-control mb-3" value={form.username} onChange={(event) => setForm({ ...form, username: event.target.value })} />
+              <label className="form-label fw-semibold">Parol</label>
+              <input className="form-control mb-4" type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} />
+              <button className="btn btn-brand w-100 d-inline-flex align-items-center justify-content-center gap-2" type="submit"><LogIn size={18} /> Kirish</button>
+            </form>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
-
-export default LoginPage;

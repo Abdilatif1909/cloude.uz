@@ -1,113 +1,59 @@
-# WebDasturlashEdu
+# Sun'iy intellekt asoslari LMS
 
-WebDasturlashEdu — `cloude.uz` domeniga deploy qilish uchun tayyorlangan zamonaviy **React + Vite** frontend loyihasi. Interfeys TailwindCSS va Framer Motion asosida qurilgan bo‘lib, professional landing page, kurslar sahifasi, glassmorphism bloklar, dark/light mode va GitHub Pages deploy tayyorgarligini o‘z ichiga oladi.
+Production-ready LMS foundation for the university course **Sun'iy intellekt asoslari** with a scalable architecture for future courses.
 
-## Asosiy imkoniyatlar
+## Stack
 
-- Zamonaviy professional UI
-- To‘liq responsive layout
-- TailwindCSS asosidagi dizayn tizimi
-- Dark / Light mode
-- Sticky navbar
-- Hero section
-- Features section
-- Courses section
-- Statistics cards
-- CTA bloklar
-- Footer
-- Framer Motion animatsiyalari
-- Glassmorphism elementlar
-- Gradient background
-- SEO title va meta description
-- GitHub Pages + custom domain (`cloude.uz`) uchun tayyor sozlama
+- Django 5, Django REST Framework, PostgreSQL, JWT, CORS, drf-spectacular
+- React, Vite, React Router, Axios, Bootstrap 5
+- Docker, Docker Compose, Gunicorn, Nginx
 
-## Texnologiyalar
+## CMS Features
 
-- React
-- Vite
-- TailwindCSS
-- Framer Motion
-- React Router
-- React Icons
+- Admin-managed lectures with PDF preview, counters, publishing, and previous/next navigation
+- Practical materials with PDF, examples, source files, difficulty, and estimated time
+- YouTube lessons with automatic video ID and thumbnail extraction
+- Resource library for PDFs, Office files, archives, images, CSV, Python, and notebooks
+- Teacher JSON quiz importer with validation and duplicate prevention
+- Admin dashboard cards, latest uploads, recent activity, global search, and statistics API
 
-## Sahifalar
-
-- `/` — Bosh sahifa
-- `/courses` — Kurslar
-- `/about` — Platforma haqida
-- `/contact` — Bog‘lanish
-
-## Deploy uchun tayyorlangan fayllar
-
-- [frontend/vite.config.js](frontend/vite.config.js) — `base: '/'` bilan sozlangan
-- [frontend/public/CNAME](frontend/public/CNAME) — custom domain: `cloude.uz`
-- [frontend/public/404.html](frontend/public/404.html) — GitHub Pages uchun SPA redirect fallback
-- [frontend/index.html](frontend/index.html) — SEO title va meta description
-
-## Lokal ishga tushirish
-
-### 1. Frontend papkaga o‘ting
-
-- `cd frontend`
-
-### 2. Paketlarni o‘rnating
-
-- `npm install`
-
-### 3. Development serverni ishga tushiring
-
-- `npm run dev`
-
-### 4. Production build yarating
-
-- `npm run build`
-
-Build muvaffaqiyatli yakunlangach [frontend/dist](frontend/dist) papkasi hosil bo‘ladi.
-
-## GitHub Pages deploy
-
-### Variant 1: GitHub Pages settings orqali
-
-1. Repository ichida frontend build natijasini tayyorlang:
-   - `cd frontend`
-   - `npm install`
-   - `npm run build`
-2. `dist` papka tarkibini GitHub Pages publish source sifatida ishlating.
-3. Repository settings ichida **Pages** bo‘limidan publish source tanlang.
-4. Custom domain sifatida `cloude.uz` ni ulang.
-
-### Variant 2: GitHub Actions orqali
-
-Repository uchun GitHub Actions workflow qo‘shib, `frontend/dist` ni Pages ga publish qilish mumkin.
-
-## Dizayn ranglari
-
-- Primary: `#2563eb`
-- Secondary: `#0f172a`
-
-## Loyiha tuzilmasi
+## Structure
 
 ```text
+backend/
+  api/
+  apps/
+    accounts/ courses/ lessons/ materials/ videos/ quizzes/ progress/ glossary/ common/
+  config/
+  media/
 frontend/
-  public/
-    CNAME
-    404.html
   src/
-    components/
-    layouts/
-    pages/
-    utils/
-    App.jsx
-    main.jsx
-  index.html
-  vite.config.js
+    components/ pages/ layouts/ services/ hooks/ assets/
+docs/
+nginx/
 ```
 
-## Eslatma
+## Quick Start
 
-Repository ichida backend bilan bog‘liq eski modullar mavjud bo‘lishi mumkin, ammo GitHub Pages deploy uchun asosiy qism **frontend** hisoblanadi.
+```bash
+cp .env.example .env
+docker compose up --build
+```
 
-## Muallif
+Create an admin user:
 
-- GitHub: [Abdilatif1909](https://github.com/Abdilatif1909)
-- Repository: [cloude.uz](https://github.com/Abdilatif1909/cloude.uz)
+```bash
+docker compose exec backend python manage.py createsuperuser
+```
+
+Open:
+
+- Frontend: `http://localhost:5173`
+- Admin: `http://localhost:8000/admin/`
+- Swagger: `http://localhost:8000/api/docs/`
+
+## Documentation
+
+- [Database schema](docs/database-schema.md)
+- [API endpoints](docs/api-endpoints.md)
+- [Installation guide](docs/installation.md)

@@ -1,28 +1,26 @@
-import http from './http';
+import api from './api.js';
 
 export const authService = {
-  login: async (credentials) => {
-    const { data } = await http.post('/auth/login/', credentials);
+  async login(username, password) {
+    const { data } = await api.post('/auth/login/', { username, password });
+    localStorage.setItem('access_token', data.access);
+    localStorage.setItem('refresh_token', data.refresh);
+    return data.user;
+  },
+  async logout() {
+    const refresh = localStorage.getItem('refresh_token');
+    if (refresh) {
+      await api.post('/auth/logout/', { refresh });
+    }
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+  },
+  async profile() {
+    const { data } = await api.get('/auth/profile/');
     return data;
   },
-  register: async (payload) => {
-    const { data } = await http.post('/auth/register/', payload);
-    return data;
-  },
-  getProfile: async () => {
-    const { data } = await http.get('/auth/profile/');
-    return data;
-  },
-  updateProfile: async (payload) => {
-    const { data } = await http.patch('/auth/profile/', payload);
-    return data;
-  },
-  getUsers: async (params = {}) => {
-    const { data } = await http.get('/auth/users/', { params });
-    return data;
-  },
-  createUser: async (payload) => {
-    const { data } = await http.post('/auth/users/', payload);
+  async changePassword(payload) {
+    const { data } = await api.post('/auth/change-password/', payload);
     return data;
   },
 };

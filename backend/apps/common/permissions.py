@@ -1,43 +1,31 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 
-class IsAdminRole(BasePermission):
-    def has_permission(self, request, view):
-        return bool(request.user and request.user.is_authenticated and request.user.role == "admin")
+class IsSuperAdmin(BasePermission):
+    def has_permission(self, request, view) -> bool:
+        return bool(request.user and request.user.is_authenticated and request.user.is_super_admin)
 
 
-class IsTeacherRole(BasePermission):
-    def has_permission(self, request, view):
-        return bool(request.user and request.user.is_authenticated and request.user.role == "teacher")
+class IsTeacherOrSuperAdmin(BasePermission):
+    def has_permission(self, request, view) -> bool:
+        user = request.user
+        return bool(user and user.is_authenticated and (user.is_teacher or user.is_super_admin))
 
 
-class IsStudentRole(BasePermission):
-    def has_permission(self, request, view):
-        return bool(request.user and request.user.is_authenticated and request.user.role == "student")
-
-
-class IsTeacherOrAdmin(BasePermission):
-    def has_permission(self, request, view):
-        return bool(
-            request.user
-            and request.user.is_authenticated
-            and request.user.role in {"teacher", "admin"}
-        )
-
-
-class IsAdminOrReadOnly(BasePermission):
-    def has_permission(self, request, view):
+class ReadOnlyOrTeacher(BasePermission):
+    def has_permission(self, request, view) -> bool:
         if request.method in SAFE_METHODS:
             return True
-        return bool(request.user and request.user.is_authenticated and request.user.role == "admin")
+        user = request.user
+        return bool(user and user.is_authenticated and (user.is_teacher or user.is_super_admin))
 
 
-class IsTeacherAdminOrReadOnly(BasePermission):
-    def has_permission(self, request, view):
-        if request.method in SAFE_METHODS:
+class IsOwnerTeacherOrSuperAdmin(BasePermission):
+    def has_object_permission(self, request, view, obj) -> bool:
+        user = request.user
+        if not user or not user.is_authenticated:
+            return False
+        if user.is_teacher or user.is_super_admin:
             return True
-        return bool(
-            request.user
-            and request.user.is_authenticated
-            and request.user.role in {"teacher", "admin"}
-        )
+        owner = getattr(obj, "student", None)
+        return owner == user

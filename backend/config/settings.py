@@ -1,39 +1,53 @@
+from __future__ import annotations
+
+import os
 from datetime import timedelta
 from pathlib import Path
-
-import dj_database_url
-from decouple import Csv, config
+from urllib.parse import urlparse
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ROOT = BASE_DIR.parent
-GITHUB_RAW_BASE_URL = config(
-    "GITHUB_RAW_BASE_URL",
-    default="https://raw.githubusercontent.com/Abdilatif1909/cloude.uz/main",
-)
+LOG_DIR = BASE_DIR / "logs"
+LOG_DIR.mkdir(exist_ok=True)
 
-SECRET_KEY = config("SECRET_KEY", default="django-insecure-webdasturlashedu-backend")
-DEBUG = config("DEBUG", default=False, cast=bool)
 
-DEFAULT_ALLOWED_HOSTS = [
-    "abdilatif.pythonanywhere.com",
-    "127.0.0.1",
-    "localhost",
-    "cloude.uz",
-    "www.cloude.uz",
-    "cloude-uz.vercel.app",
+def load_env_file(path: Path) -> None:
+    if not path.exists():
+        return
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+
+
+load_env_file(PROJECT_ROOT / ".env")
+load_env_file(BASE_DIR / ".env")
+
+
+def env(name: str, default: str = "") -> str:
+    return os.getenv(name, default)
+
+
+def env_bool(name: str, default: bool = False) -> bool:
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.lower() in {"1", "true", "yes", "on"}
+
+
+SECRET_KEY = env("DJANGO_SECRET_KEY", "change-me-in-production")
+DEBUG = env_bool("DJANGO_DEBUG", True)
+if not DEBUG and SECRET_KEY in {"", "change-me", "change-me-in-production"}:
+    raise RuntimeError("DJANGO_SECRET_KEY must be set to a strong secret when DJANGO_DEBUG=False.")
+
+ALLOWED_HOSTS = [host.strip() for host in env("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,cloude.uz,www.cloude.uz").split(",") if host.strip()]
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in env("DJANGO_CSRF_TRUSTED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,https://cloude.uz,https://www.cloude.uz").split(",")
+    if origin.strip()
 ]
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default=",".join(DEFAULT_ALLOWED_HOSTS),
-    cast=Csv(),
-)
-for host in DEFAULT_ALLOWED_HOSTS:
-    if host not in ALLOWED_HOSTS:
-        ALLOWED_HOSTS.append(host)
-
-RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default="")
-if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -42,33 +56,37 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "corsheaders",
     "rest_framework",
-    "rest_framework.authtoken",
-    "rest_framework_simplejwt",
-    "django.contrib.humanize",
-    "apps.users",
+    "rest_framework_simplejwt.token_blacklist",
+    "corsheaders",
+    "django_filters",
+    "drf_spectacular",
+    "apps.accounts",
+    "apps.common",
+    "apps.courses",
+    "apps.lessons",
     "apps.materials",
-    "apps.books",
-    "apps.assessments",
-    "apps.search",
+    "apps.videos",
+    "apps.quizzes",
+    "apps.progress",
+    "apps.glossary",
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "apps.common.middleware.SecurityHeadersMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
-WSGI_APPLICATION = "config.wsgi.application"
-ASGI_APPLICATION = "config.asgi.application"
 
 TEMPLATES = [
     {
@@ -77,6 +95,7 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
+                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -84,126 +103,179 @@ TEMPLATES = [
         },
     }
 ]
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+WSGI_APPLICATION = "config.wsgi.application"
+
+
+def database_from_url(database_url: str) -> dict:
+    parsed = urlparse(database_url)
+    if parsed.scheme in {"sqlite", "sqlite3"}:
+        name = parsed.path.lstrip("/") or "db.sqlite3"
+        return {"ENGINE": "django.db.backends.sqlite3", "NAME": str(BASE_DIR / name)}
+    if parsed.scheme in {"postgres", "postgresql"}:
+        return {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": parsed.path.lstrip("/"),
+            "USER": parsed.username or "",
+            "PASSWORD": parsed.password or "",
+            "HOST": parsed.hostname or "localhost",
+            "PORT": str(parsed.port or 5432),
+            "OPTIONS": {"connect_timeout": int(env("POSTGRES_CONNECT_TIMEOUT", "3" if DEBUG else "10"))},
+        }
+    raise RuntimeError(f"Unsupported DATABASE_URL scheme: {parsed.scheme}")
+
+
+def build_database_config() -> dict:
+    database_url = env("DATABASE_URL")
+    if database_url:
+        return database_from_url(database_url)
+
+    db_engine = env("DB_ENGINE")
+    explicit_postgres = any(os.getenv(name) for name in ("DB_ENGINE", "POSTGRES_HOST", "POSTGRES_DB", "POSTGRES_USER", "POSTGRES_PASSWORD"))
+    if not db_engine:
+        db_engine = "django.db.backends.postgresql" if explicit_postgres or not DEBUG else "django.db.backends.sqlite3"
+
+    if db_engine == "django.db.backends.sqlite3":
+        return {"ENGINE": db_engine, "NAME": env("SQLITE_NAME", str(BASE_DIR / "db.sqlite3"))}
+
+    config = {
+        "ENGINE": db_engine,
+        "NAME": env("POSTGRES_DB", "lms"),
+        "USER": env("POSTGRES_USER", "lms"),
+        "PASSWORD": env("POSTGRES_PASSWORD", "lms"),
+        "HOST": env("POSTGRES_HOST", "localhost"),
+        "PORT": env("POSTGRES_PORT", "5432"),
     }
-}
+    if db_engine == "django.db.backends.postgresql":
+        config["OPTIONS"] = {"connect_timeout": int(env("POSTGRES_CONNECT_TIMEOUT", "3" if DEBUG else "10"))}
+    return config
+
+
+DATABASES = {"default": build_database_config()}
+
+AUTH_USER_MODEL = "accounts.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", "OPTIONS": {"min_length": int(env("PASSWORD_MIN_LENGTH", "10"))}},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 LANGUAGE_CODE = "uz"
-TIME_ZONE = "Asia/Tashkent"
+TIME_ZONE = env("DJANGO_TIME_ZONE", "Asia/Tashkent")
 USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-AUTH_USER_MODEL = "users.User"
+FILE_UPLOAD_MAX_MEMORY_SIZE = int(env("FILE_UPLOAD_MAX_MEMORY_SIZE", str(10 * 1024 * 1024)))
+DATA_UPLOAD_MAX_MEMORY_SIZE = int(env("DATA_UPLOAD_MAX_MEMORY_SIZE", str(20 * 1024 * 1024)))
+MAX_UPLOAD_SIZE = int(env("MAX_UPLOAD_SIZE", str(50 * 1024 * 1024)))
+LOGIN_LOCKOUT_ATTEMPTS = int(env("LOGIN_LOCKOUT_ATTEMPTS", "5"))
+LOGIN_LOCKOUT_SECONDS = int(env("LOGIN_LOCKOUT_SECONDS", "900"))
+
+CORS_ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in env("DJANGO_CORS_ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,https://cloude.uz,https://www.cloude.uz").split(",")
+    if origin.strip()
+]
+CORS_ALLOW_CREDENTIALS = env_bool("DJANGO_CORS_ALLOW_CREDENTIALS", True)
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = env_bool("DJANGO_SECURE_SSL_REDIRECT", False)
+SECURE_HSTS_SECONDS = int(env("DJANGO_SECURE_HSTS_SECONDS", "0" if DEBUG else "31536000"))
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env_bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", not DEBUG)
+SECURE_HSTS_PRELOAD = env_bool("DJANGO_SECURE_HSTS_PRELOAD", not DEBUG)
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SESSION_COOKIE_SECURE = env_bool("DJANGO_SESSION_COOKIE_SECURE", not DEBUG)
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = env("DJANGO_SESSION_COOKIE_SAMESITE", "Lax")
+CSRF_COOKIE_SECURE = env_bool("DJANGO_CSRF_COOKIE_SECURE", not DEBUG)
+CSRF_COOKIE_HTTPONLY = env_bool("DJANGO_CSRF_COOKIE_HTTPONLY", False)
+CSRF_COOKIE_SAMESITE = env("DJANGO_CSRF_COOKIE_SAMESITE", "Lax")
+X_FRAME_OPTIONS = env("DJANGO_X_FRAME_OPTIONS", "DENY")
+
+CACHES = {
+    "default": {
+        "BACKEND": env("DJANGO_CACHE_BACKEND", "django.core.cache.backends.locmem.LocMemCache"),
+        "LOCATION": env("DJANGO_CACHE_LOCATION", "lms-cache"),
+        "TIMEOUT": int(env("DJANGO_CACHE_TIMEOUT", "300")),
+    }
+}
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
-    "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
-    ),
-    "DEFAULT_PAGINATION_CLASS": "utils.pagination.StandardPagination",
-    "PAGE_SIZE": 10,
+    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
+    "DEFAULT_PAGINATION_CLASS": "apps.common.pagination.StandardResultsSetPagination",
+    "PAGE_SIZE": 20,
     "DEFAULT_FILTER_BACKENDS": (
+        "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.SearchFilter",
         "rest_framework.filters.OrderingFilter",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "EXCEPTION_HANDLER": "apps.common.exceptions.api_exception_handler",
+    "DEFAULT_THROTTLE_CLASSES": (
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+        "rest_framework.throttling.ScopedRateThrottle",
+    ),
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": env("DRF_THROTTLE_ANON", "100/hour"),
+        "user": env("DRF_THROTTLE_USER", "1000/hour"),
+        "login": env("DRF_THROTTLE_LOGIN", "10/minute"),
+        "upload": env("DRF_THROTTLE_UPLOAD", "60/hour"),
+    },
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=int(env("JWT_ACCESS_MINUTES", "30"))),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=int(env("JWT_REFRESH_DAYS", "7"))),
     "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": False,
+    "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": True,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-CORS_ALLOW_ALL_ORIGINS = False
-DEFAULT_CORS_ALLOWED_ORIGINS = [
-    "https://cloude.uz",
-    "https://www.cloude.uz",
-    "https://cloude-uz.vercel.app",
-    "http://127.0.0.1:5173",
-    "http://localhost:5173",
-]
-CORS_ALLOWED_ORIGINS = config(
-    "CORS_ALLOWED_ORIGINS",
-    default=",".join(DEFAULT_CORS_ALLOWED_ORIGINS),
-    cast=Csv(),
-)
-for origin in DEFAULT_CORS_ALLOWED_ORIGINS:
-    if origin not in CORS_ALLOWED_ORIGINS:
-        CORS_ALLOWED_ORIGINS.append(origin)
-CORS_ALLOW_CREDENTIALS = True
-
-DEFAULT_CSRF_TRUSTED_ORIGINS = [
-    "https://abdilatif.pythonanywhere.com",
-    "https://cloude.uz",
-    "https://www.cloude.uz",
-    "https://cloude-uz.vercel.app",
-]
-CSRF_TRUSTED_ORIGINS = config(
-    "CSRF_TRUSTED_ORIGINS",
-    default=",".join(DEFAULT_CSRF_TRUSTED_ORIGINS),
-    cast=Csv(),
-)
-for origin in DEFAULT_CSRF_TRUSTED_ORIGINS:
-    if origin not in CSRF_TRUSTED_ORIGINS:
-        CSRF_TRUSTED_ORIGINS.append(origin)
-
-PDF_IMPORT_DIRECTORIES = {
-    "lectures": PROJECT_ROOT / "pdf" / "maruza",
-    "practicals": PROJECT_ROOT / "pdf" / "amaliy",
-    "books": PROJECT_ROOT / "pdf" / "kitoblar",
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Cloud Education Platform API",
+    "DESCRIPTION": "cloude.uz REST API for Sun'iy intellekt asoslari at Axborot Texnologiyalari va Menejment Universiteti.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = "SAMEORIGIN"
-
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-USE_X_FORWARDED_HOST = True
-
-if not DEBUG:
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=True, cast=bool)
-    SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default=31536000, cast=int)
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-    SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
-else:
-    SESSION_COOKIE_SECURE = False
-    CSRF_COOKIE_SECURE = False
-    SECURE_SSL_REDIRECT = False
-
-ADMIN_SITE_HEADER = "WebDasturlashEdu boshqaruvi"
-ADMIN_SITE_TITLE = "WebDasturlashEdu admin paneli"
-ADMIN_INDEX_TITLE = "Platforma boshqaruvi"
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {"format": "%(asctime)s [%(levelname)s] %(name)s %(message)s"},
+    },
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "standard"},
+        "app_file": {
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": LOG_DIR / "application.log",
+            "when": "midnight",
+            "backupCount": 14,
+            "formatter": "standard",
+        },
+        "error_file": {
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": LOG_DIR / "errors.log",
+            "when": "midnight",
+            "backupCount": 30,
+            "level": "ERROR",
+            "formatter": "standard",
+        },
+    },
+    "root": {"handlers": ["console", "app_file", "error_file"], "level": env("DJANGO_LOG_LEVEL", "INFO")},
+    "loggers": {
+        "django.request": {"handlers": ["console", "error_file"], "level": "ERROR", "propagate": False},
+        "apps.audit": {"handlers": ["console", "app_file"], "level": "INFO", "propagate": False},
+    },
+}

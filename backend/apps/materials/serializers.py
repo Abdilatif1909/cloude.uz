@@ -1,38 +1,77 @@
 from rest_framework import serializers
 
-from apps.materials.models import Lecture, Practical
+from .models import LectureMaterial, PracticeMaterial, Resource
 
 
-class BaseMaterialSerializer(serializers.ModelSerializer):
-    file_url = serializers.SerializerMethodField()
-    pdf_url = serializers.SerializerMethodField()
-    download_url = serializers.SerializerMethodField()
-    file_name = serializers.SerializerMethodField()
+class LectureMaterialSerializer(serializers.ModelSerializer):
+    lesson_title = serializers.CharField(source="lesson.title", read_only=True)
+    course_id = serializers.IntegerField(source="lesson.course_id", read_only=True)
 
-    def get_file_url(self, obj):
-        return obj.pdf_url or (obj.file.url if obj.file else None)
-
-    def get_pdf_url(self, obj):
-        return obj.pdf_url
-
-    def get_download_url(self, obj):
-        return obj.download_url
-
-    def get_file_name(self, obj):
-        return obj.file_name
-
-
-class LectureSerializer(BaseMaterialSerializer):
     class Meta:
-        model = Lecture
-        fields = ["id", "title", "source_path", "file_hash", "file", "file_name", "file_url", "pdf_url", "download_url", "uploaded_at"]
-        read_only_fields = ["id", "uploaded_at", "file_url", "pdf_url", "download_url", "file_name", "file_hash"]
-        extra_kwargs = {"file": {"required": False, "allow_null": True}}
+        model = LectureMaterial
+        fields = [
+            "id",
+            "lesson",
+            "lesson_title",
+            "course_id",
+            "title",
+            "lecture_number",
+            "pdf_file",
+            "description",
+            "cover_image",
+            "estimated_reading_time",
+            "download_count",
+            "view_count",
+            "is_published",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["download_count", "view_count", "created_at", "updated_at"]
 
 
-class PracticalSerializer(BaseMaterialSerializer):
+class PracticeMaterialSerializer(serializers.ModelSerializer):
+    lesson_title = serializers.CharField(source="lesson.title", read_only=True)
+    course_id = serializers.IntegerField(source="lesson.course_id", read_only=True)
+
     class Meta:
-        model = Practical
-        fields = ["id", "title", "source_path", "file_hash", "file", "file_name", "file_url", "pdf_url", "download_url", "uploaded_at"]
-        read_only_fields = ["id", "uploaded_at", "file_url", "pdf_url", "download_url", "file_name", "file_hash"]
-        extra_kwargs = {"file": {"required": False, "allow_null": True}}
+        model = PracticeMaterial
+        fields = [
+            "id",
+            "lesson",
+            "lesson_title",
+            "course_id",
+            "title",
+            "pdf_file",
+            "example_files",
+            "source_code_files",
+            "description",
+            "difficulty",
+            "estimated_time",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["created_at", "updated_at"]
+
+
+class ResourceSerializer(serializers.ModelSerializer):
+    course_title = serializers.CharField(source="course.title", read_only=True)
+    lesson_title = serializers.CharField(source="lesson.title", read_only=True)
+
+    class Meta:
+        model = Resource
+        fields = [
+            "id",
+            "course",
+            "course_title",
+            "lesson",
+            "lesson_title",
+            "title",
+            "description",
+            "category",
+            "file",
+            "download_count",
+            "is_published",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["download_count", "created_at", "updated_at"]

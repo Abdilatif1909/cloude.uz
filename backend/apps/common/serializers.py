@@ -1,26 +1,16 @@
-from django.conf import settings
 from rest_framework import serializers
 
-from apps.common.models import ContactMessage
+from .models import AuditLog
 
 
-class ContactMessageSerializer(serializers.ModelSerializer):
+class AuditLogSerializer(serializers.ModelSerializer):
+    actor_name = serializers.CharField(source="actor.get_full_name", read_only=True)
+
     class Meta:
-        model = ContactMessage
-        fields = ["id", "full_name", "email", "subject", "message", "created_at"]
-        read_only_fields = ["id", "created_at"]
+        model = AuditLog
+        fields = ["id", "actor", "actor_name", "action", "target", "target_id", "metadata", "ip_address", "created_at"]
+        read_only_fields = fields
 
 
-class AboutSerializer(serializers.Serializer):
-    name = serializers.CharField(default=settings.APP_METADATA["name"])
-    description = serializers.CharField(default=settings.APP_METADATA["description"])
-    contact_email = serializers.EmailField(default=settings.APP_METADATA["contact_email"])
-    features = serializers.ListField(
-        child=serializers.CharField(),
-        default=[
-            "JWT authentication",
-            "PDF learning resources",
-            "Role-based dashboards",
-            "Online tests and analytics",
-        ],
-    )
+class MessageSerializer(serializers.Serializer):
+    detail = serializers.CharField()
