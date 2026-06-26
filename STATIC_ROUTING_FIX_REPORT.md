@@ -116,4 +116,4 @@ The important result is that an existing JavaScript asset returns JavaScript, an
 
 ## Commit
 
-Commit hash: `PENDING`
+Static routing fix commit hash: `e5b39c2`
