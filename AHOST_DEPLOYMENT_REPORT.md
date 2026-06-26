@@ -175,6 +175,6 @@ Local verification used `SQLITE_NAME=db.sqlite3` override so the workstation did
 
 ## Git
 
-Commit hash: `PENDING`
+Deployment commit hash: `4c7b329`
 
-GitHub push confirmation: `PENDING`
+GitHub push confirmation: `4c833a8..4c7b329 main -> main`
