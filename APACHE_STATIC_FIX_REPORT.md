@@ -135,4 +135,4 @@ If the document root is different, Apache will not see this `.htaccess`, and the
 
 ## Commit
 
-Commit hash: `PENDING`
+Apache static fix commit hash: `502be24`
