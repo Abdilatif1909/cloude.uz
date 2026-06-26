@@ -4,7 +4,7 @@ import { ArrowRight, BookOpen, CheckCircle2, Clock3, GraduationCap, Layers3, Sea
 import { motion } from 'framer-motion';
 import { lmsService } from '../services/lmsService.js';
 
-const BRAND_LOGO = '/brand-logo.svg';
+const BRAND_LOGO = `${import.meta.env.BASE_URL}brand-logo.svg`;
 
 export default function CourseListPage() {
   const [courses, setCourses] = useState([]);

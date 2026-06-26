@@ -7,6 +7,9 @@ from urllib.parse import urlparse
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ROOT = BASE_DIR.parent
+FRONTEND_DIR = PROJECT_ROOT / "frontend"
+FRONTEND_DIST_DIR = FRONTEND_DIR / "dist"
+BACKEND_STATIC_DIR = BASE_DIR / "static"
 LOG_DIR = BASE_DIR / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
@@ -14,7 +17,7 @@ LOG_DIR.mkdir(exist_ok=True)
 def load_env_file(path: Path) -> None:
     if not path.exists():
         return
-    for raw_line in path.read_text(encoding="utf-8").splitlines():
+    for raw_line in path.read_text(encoding="utf-8-sig").splitlines():
         line = raw_line.strip()
         if not line or line.startswith("#") or "=" not in line:
             continue
@@ -37,17 +40,17 @@ def env_bool(name: str, default: bool = False) -> bool:
     return value.lower() in {"1", "true", "yes", "on"}
 
 
+def env_list(name: str, default: str = "") -> list[str]:
+    return [item.strip() for item in env(name, default).split(",") if item.strip()]
+
+
 SECRET_KEY = env("DJANGO_SECRET_KEY", "change-me-in-production")
 DEBUG = env_bool("DJANGO_DEBUG", True)
 if not DEBUG and SECRET_KEY in {"", "change-me", "change-me-in-production"}:
     raise RuntimeError("DJANGO_SECRET_KEY must be set to a strong secret when DJANGO_DEBUG=False.")
 
-ALLOWED_HOSTS = [host.strip() for host in env("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,cloude.uz,www.cloude.uz").split(",") if host.strip()]
-CSRF_TRUSTED_ORIGINS = [
-    origin.strip()
-    for origin in env("DJANGO_CSRF_TRUSTED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,https://cloude.uz,https://www.cloude.uz").split(",")
-    if origin.strip()
-]
+ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,cloude.uz,www.cloude.uz")
+CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,https://cloude.uz,https://www.cloude.uz")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -131,9 +134,10 @@ def build_database_config() -> dict:
         return database_from_url(database_url)
 
     db_engine = env("DB_ENGINE")
-    explicit_postgres = any(os.getenv(name) for name in ("DB_ENGINE", "POSTGRES_HOST", "POSTGRES_DB", "POSTGRES_USER", "POSTGRES_PASSWORD"))
+    postgres_values = [env(name) for name in ("POSTGRES_HOST", "POSTGRES_DB", "POSTGRES_USER", "POSTGRES_PASSWORD")]
+    explicit_postgres = db_engine == "django.db.backends.postgresql" or all(postgres_values)
     if not db_engine:
-        db_engine = "django.db.backends.postgresql" if explicit_postgres or not DEBUG else "django.db.backends.sqlite3"
+        db_engine = "django.db.backends.postgresql" if explicit_postgres else "django.db.backends.sqlite3"
 
     if db_engine == "django.db.backends.sqlite3":
         return {"ENGINE": db_engine, "NAME": env("SQLITE_NAME", str(BASE_DIR / "db.sqlite3"))}
@@ -169,6 +173,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [path for path in (BACKEND_STATIC_DIR, FRONTEND_DIST_DIR) if path.exists()]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -179,11 +184,7 @@ MAX_UPLOAD_SIZE = int(env("MAX_UPLOAD_SIZE", str(50 * 1024 * 1024)))
 LOGIN_LOCKOUT_ATTEMPTS = int(env("LOGIN_LOCKOUT_ATTEMPTS", "5"))
 LOGIN_LOCKOUT_SECONDS = int(env("LOGIN_LOCKOUT_SECONDS", "900"))
 
-CORS_ALLOWED_ORIGINS = [
-    origin.strip()
-    for origin in env("DJANGO_CORS_ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,https://cloude.uz,https://www.cloude.uz").split(",")
-    if origin.strip()
-]
+CORS_ALLOWED_ORIGINS = env_list("DJANGO_CORS_ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,https://cloude.uz,https://www.cloude.uz")
 CORS_ALLOW_CREDENTIALS = env_bool("DJANGO_CORS_ALLOW_CREDENTIALS", True)
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

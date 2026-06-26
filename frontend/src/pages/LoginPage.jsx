@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { LogIn } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth.jsx';
 
-const BRAND_LOGO = '/brand-logo.svg';
+const BRAND_LOGO = `${import.meta.env.BASE_URL}brand-logo.svg`;
 
 export default function LoginPage() {
   const { login } = useAuth();

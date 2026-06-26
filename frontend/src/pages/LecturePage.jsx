@@ -6,7 +6,7 @@ import LoadingSkeleton from '../components/LoadingSkeleton.jsx';
 import ToastMessage from '../components/ToastMessage.jsx';
 import { lmsService } from '../services/lmsService.js';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api/v1';
 
 export default function LecturePage() {
   const { lectureId } = useParams();
